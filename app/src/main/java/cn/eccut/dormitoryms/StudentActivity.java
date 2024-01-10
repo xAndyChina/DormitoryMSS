@@ -136,6 +136,7 @@ public class StudentActivity extends AppCompatActivity {
                             new String[]{"number", "name", "gender", "age", "college", "grade", "dorNo", "tel"},
                             new int[]{R.id.lv_number, R.id.lv_name, R.id.lv_gender, R.id.lv_age, R.id.lv_college, R.id.lv_grade, R.id.lv_dorNo, R.id.lv_tel}
                     );
+                    simpleAdapter.notifyDataSetChanged();
                     listView.setAdapter(simpleAdapter);
 
                 }
@@ -149,7 +150,13 @@ public class StudentActivity extends AppCompatActivity {
                 String number = et_stuNoS.getText().toString();
                 String name = et_stuNameS.getText().toString();
                 String gender = et_genderS.getText().toString();
-                int age = Integer.parseInt(et_ageS.getText().toString());
+                int age = 18;
+                if (TextUtils.isEmpty(et_ageS.getText().toString())){
+                    Toast.makeText(StudentActivity.this,"请输入年龄...",Toast.LENGTH_SHORT).show();
+                }else {
+                    age = Integer.parseInt(et_ageS.getText().toString());
+                }
+
                 String college = et_collegeS.getText().toString();
                 String grade = et_gradeS.getText().toString();
                 String dorNo = et_dorNoS.getText().toString();
@@ -190,8 +197,7 @@ public class StudentActivity extends AppCompatActivity {
                     Toast.makeText(StudentActivity.this, "请输入学号以及姓名进行查询", Toast.LENGTH_SHORT).show();
                 } else {
 
-
-                    List<Student> allStudents = (List<Student>) studentDao.find_a(number, name);
+                    List<Student> allStudents = studentDao.find_a(number, name);
                     List<Map<String, String>> data = convertStudentsToMapList(allStudents);
 
                     SimpleAdapter simpleAdapter = new SimpleAdapter(
